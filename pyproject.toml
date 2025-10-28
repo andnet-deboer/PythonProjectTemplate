@@ -1,18 +1,23 @@
 [tool.ruff]
-line-length = 79
 target-version = "py311"
+line-length = 79
 fix = true
-
-# Select codes:
-# I: isort (import sorting)
-# E: pycodestyle errors
-# W: pycodestyle warnings
-# F: Pyflakes (already default but good to be explicit)
-# D: pydocstyle (PEP 257)
-# C90: McCabe complexity (optional, include if you want strict complexity checks)
-extend-select = ["I", "E", "W", "F", "D", "C90"]
+exclude = [ ".git", ".tox", ".venv", "__pycache__", "build", "install", "log", "venv",]
 
 [tool.ruff.format]
 quote-style = "single"
 docstring-code-format = true
 indent-style = "space"
+
+[tool.ruff.lint]
+extend-select = [ "I", "E", "W", "F", "D", "C90",]
+ignore = [ "D100", "D104", "D107", "D203", "D212", "D415",]
+
+[tool.ruff.lint.isort]
+known-first-party = [ "ament_copyright", "ament_flake8", "ament_pep257", "gazebo_msgs", "gazebo_ros", "geometry_msgs", "launch", "launch_ros", "moveit_commander", "moveit_msgs", "moveit_py", "my-test-package", "nav_msgs", "rclpy", "ros2_control_interfaces", "ros_gz_bridge", "ros_gz_sim", "rviz", "sensor_msgs", "std_msgs", "tf2_msgs", "tf2_ros", "tf_transformations", "turtle_brick", "turtle_brick_interfaces", "visualization_msgs",]
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 16

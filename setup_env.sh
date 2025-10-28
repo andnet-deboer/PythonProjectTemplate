@@ -32,6 +32,7 @@ echo "setuptools" >> $REQS_TO_INSTALL
 echo "jinja2" >> $REQS_TO_INSTALL
 echo "typeguard" >> $REQS_TO_INSTALL
 echo "pyyaml" >> $REQS_TO_INSTALL
+echo "toml" >> $REQS_TO_INSTALL
 
 # Default packages
 echo "numpy" >> $REQS_TO_INSTALL
