@@ -1,0 +1,14 @@
+[tool.ruff]
+line-length = 79
+target-version = "py311"
+fix = true
+extend-select = ["I"]  # Enables import sorting
+
+[tool.ruff.format]
+quote-style = "single"
+docstring-code-format = true
+indent-style = "space"
+
+[tool.flake8]
+max-line-length = 79
+extend-ignore = ["E203", "W503"]
