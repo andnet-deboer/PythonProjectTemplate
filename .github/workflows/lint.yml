@@ -9,6 +9,11 @@ env:
 jobs:
   lint:
     runs-on: ubuntu-latest
+
+    # Run the job inside a Docker container that already has ROS installed
+    container:
+      image: ros:kilted-ros-base
+
     steps:
       - uses: actions/checkout@v4
 
@@ -17,14 +22,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      # Setup ROS using the variable
-      - name: Setup ROS 2
-        uses: ros-tooling/setup-ros@v0.7
-        with:
-          # Use the correct input name and the variable
-          required-ros-distributions: ${{ env.ROS_DISTRO }}
-
-      # 3. Cache the pip venv directory
+      # Cache the pip venv directory
       - name: Cache pip venv
         id: cache-pip
         uses: actions/cache@v4
@@ -37,13 +35,8 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
-          # Source ROS using the variable
-          source /opt/ros/${{ env.ROS_DISTRO }}/setup.bash
-
-          sudo rosdep init || true
-          rosdep update
-
-          # Use rosdep to install ROS dependencies
+          # The ROS container automatically sources ROS, so rosdep is on the PATH.
+          # We just need to install our project's specific ROS dependencies.
           rosdep install --from-paths src --ignore-src -r -y
 
           # Install Python-specific packages
@@ -55,8 +48,8 @@ jobs:
       # Run lint checks
       - name: Run lint and format checks with Ruff
         run: |
-          # Source both environments using the variable
-          source /opt/ros/${{ env.ROS_DISTRO }}/setup.bash
+          # The ROS env is already sourced by the container.
+          # We only need to activate our venv.
           source venv/bin/activate
           ruff format src --check
           ruff check src
@@ -64,7 +57,5 @@ jobs:
       # Run tests
       - name: Run tests
         run: |
-          # Source both environments using the variable
-          source /opt/ros/${{ env.ROS_DISTRO }}/setup.bash
           source venv/bin/activate
           pytest
