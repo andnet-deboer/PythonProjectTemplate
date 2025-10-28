@@ -75,4 +75,4 @@ pip install -r $REQS_TO_INSTALL
 
 # --- Generate requirements.txt ---
 echo "Generating requirements.txt..."
-pip freeze > requirements.txt
+pip freeze --local > requirements.txt

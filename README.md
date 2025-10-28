@@ -99,7 +99,7 @@ ruff format src/  # auto-format code
 After installing new packages, update `requirements.txt`:
 
 ```bash
-pip freeze > requirements.txt
+pip freeze --local > requirements.txt
 ```
 
 ---
