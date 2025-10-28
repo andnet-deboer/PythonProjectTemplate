@@ -19,8 +19,8 @@
 1. Clone the repository:
 
 ```bash
-git clone <your-repo-url>
-cd <your-repo-directory>
+git clone git@github.com:andnet-deboer/PythonBoilerPlate.git
+cd PythonBoilerPlate
 ```
 
 
