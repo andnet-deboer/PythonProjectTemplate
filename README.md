@@ -51,7 +51,7 @@ You can **combine** multiple arguments like ```make setup ros ai--tensorflow```
 After running, activate the environment:
 
 ```bash
-source venv/bin/activate
+. venv/bin/activate
 ```
 
 ### Cleaning the Environment
