@@ -36,7 +36,10 @@ jobs:
       - name: Install dependencies
         run: |
           # The ROS container automatically sources ROS, so rosdep is on the PATH.
-          # We just need to install our project's specific ROS dependencies.
+          # Update rosdep sources first
+          rosdep update
+
+          # Now install project's specific ROS dependencies
           rosdep install --from-paths src --ignore-src -r -y
 
           # Install Python-specific packages
