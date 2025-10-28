@@ -1,6 +1,6 @@
 # Getting Started with This Python Project Template
 
-> Note: This file is for local setup instructions only. You can safely add it to `.gitignore`.
+> Note: This file is for local setup instructions only. You can rename it and add it to `.gitignore` or delete it from your project entirely.
 
 ---
 
