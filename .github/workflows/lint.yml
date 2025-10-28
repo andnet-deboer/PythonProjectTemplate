@@ -34,6 +34,8 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
+        # Add shell: bash here
+        shell: bash
         run: |
           # The ROS container automatically sources ROS, so rosdep is on the PATH.
           # Update rosdep sources first
@@ -44,12 +46,14 @@ jobs:
 
           # Install Python-specific packages
           python -m venv venv
-          source venv/bin/activate
+          source venv/bin/activate # 'source' now works because we specified bash
           pip install --upgrade pip
           pip install -r requirements.txt
 
       # Run lint checks
       - name: Run lint and format checks with Ruff
+        # Add shell: bash here
+        shell: bash
         run: |
           # The ROS env is already sourced by the container.
           # We only need to activate our venv.
@@ -59,6 +63,8 @@ jobs:
 
       # Run tests
       - name: Run tests
+        # Add shell: bash here
+        shell: bash
         run: |
           source venv/bin/activate
           pytest
