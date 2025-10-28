@@ -2,6 +2,10 @@ name: Lint and Test
 
 on: [push, pull_request]
 
+# Define the ROS version as a variable for the whole workflow
+env:
+  ROS_DISTRO: kilted
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -13,20 +17,19 @@ jobs:
         with:
           python-version: "3.11"
 
-      # Setup ROS using an action that has built-in caching
-      - name: Setup ROS 2 Kilted
+      # Setup ROS using the variable
+      - name: Setup ROS 2
         uses: ros-tooling/setup-ros@v0.7
         with:
-          distro: kilted
-          # This action automatically caches the main ROS installation
+          # Use the correct input name and the variable
+          required-ros-distributions: ${{ env.ROS_DISTRO }}
 
-      # Cache the pip venv directory
+      # 3. Cache the pip venv directory
       - name: Cache pip venv
         id: cache-pip
         uses: actions/cache@v4
         with:
           path: venv
-          # Create a unique key based on the requirements.txt file
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
@@ -34,19 +37,16 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
-          # Source ROS to make rosdep available
-          source /opt/ros/kilted/setup.bash
+          # Source ROS using the variable
+          source /opt/ros/${{ env.ROS_DISTRO }}/setup.bash
 
-          # Initialize rosdep (apt-get install python3-rosdep was handled by setup-ros)
-          sudo rosdep init || true  # Allow failure if already initialized
+          sudo rosdep init || true
           rosdep update
 
-          # Use rosdep to install *only* the ROS dependencies (like ackermann-msgs)
-          # This is very fast.
+          # Use rosdep to install ROS dependencies
           rosdep install --from-paths src --ignore-src -r -y
 
-          # Create venv and install pip packages
-          # pip will use the cache if requirements.txt hasn't changed
+          # Install Python-specific packages
           python -m venv venv
           source venv/bin/activate
           pip install --upgrade pip
@@ -55,13 +55,15 @@ jobs:
       # Run lint checks
       - name: Run lint and format checks with Ruff
         run: |
-          source /opt/ros/kilted/setup.bash
+          # Source both environments using the variable
+          source /opt/ros/${{ env.ROS_DISTRO }}/setup.bash
           source venv/bin/activate
           ruff check src --fix
 
       # Run tests
       - name: Run tests
         run: |
-          source /opt/ros/kilted/setup.bash
+          # Source both environments using the variable
+          source /opt/ros/${{ env.ROS_DISTRO }}/setup.bash
           source venv/bin/activate
           pytest
