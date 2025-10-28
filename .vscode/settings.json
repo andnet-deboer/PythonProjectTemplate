@@ -4,7 +4,13 @@
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
-  "ruff.organizeImports": true,
+  "ruff.organizeImports": true, // Runs organize imports on save
+
+  // Runs ruff check --fix on save
+  "editor.codeActionsOnSave": {
+    "source.fixAll.ruff": "explicit"
+  },
+
   "python.analysis.autoImportCompletions": true,
   "python.analysis.typeCheckingMode": "basic"
 }
