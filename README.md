@@ -39,7 +39,7 @@ This command will:
 * Create a virtual environment (`venv`) if it does not exist.
 * Install default Python packages (numpy, pandas, matplotlib, etc.).
 * Install development tools (Ruff, flake8, isort, mypy, pytest, pre-commit).
-* Optionally install extras (AI frameworks, ROS) if specified via `EXTRA`:
+* Optionally install extras (AI frameworks, ROS) if specified:
 
 ```bash
 make setup ai--tensorflow
