@@ -2,7 +2,15 @@
 line-length = 79
 target-version = "py311"
 fix = true
-extend-select = ["I"]  # Enables import sorting
+
+# Select codes:
+# I: isort (import sorting)
+# E: pycodestyle errors
+# W: pycodestyle warnings
+# F: Pyflakes (already default but good to be explicit)
+# D: pydocstyle (PEP 257)
+# C90: McCabe complexity (optional, include if you want strict complexity checks)
+extend-select = ["I", "E", "W", "F", "D", "C90"]
 
 [tool.ruff.format]
 quote-style = "single"
