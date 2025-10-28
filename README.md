@@ -105,3 +105,8 @@ pip freeze --local > requirements.txt
 ---
 
 This setup provides a consistent development environment and clear workflow for new contributors.
+
+### License
+Copyright &copy; 2025 Andnet DeBoer
+
+This project is licensed under the terms of the MIT License.
